@@ -156,6 +156,31 @@ function derive(site) {
     ? `${DAY_NAMES[daysOf(main)[0]]}, ${main.time}`
     : '';
 
+  // Карта Яндекса по координатам из конфига. Виджету не нужен API-ключ,
+  // но грузится он только по нажатию — см. .map в main.js.
+  const { lat, lon } = site.address ?? {};
+  site.address.mapEmbed =
+    lat && lon
+      ? `https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=17&pt=${lon},${lat},pm2rdm`
+      : '';
+
+  // Метрика подключается, только если в конфиге есть номер счётчика
+  site.metrikaHtml = site.metrikaId
+    ? `<script>
+      (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) return;
+        }
+        k = e.createElement(t); a = e.getElementsByTagName(t)[0];
+        k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+      ym(${site.metrikaId}, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/${site.metrikaId}" style="position:absolute;left:-9999px" alt="" /></div></noscript>`
+    : '';
+
   // Пасторов может быть несколько — имена склеиваем по-русски, через «и»
   const pastors = site.pastors ?? [];
   site.pastorNames = pastors

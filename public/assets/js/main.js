@@ -187,6 +187,27 @@
     }
   }
 
+  /* ── Карта по требованию ────────────────────────────────────────
+     Виджет Яндекса — единственный внешний запрос на сайте, поэтому он
+     не грузится сам: до нажатия человек видит фирменную плашку с
+     адресом, и никакие данные никуда не уходят.                      */
+
+  for (const map of $$('.map[data-map]')) {
+    const btn = $('.map__btn', map);
+    if (!btn) continue;
+
+    btn.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = map.dataset.map;
+      frame.title = 'Карта проезда к церкви';
+      frame.loading = 'lazy';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      map.classList.add('is-loaded');
+      map.append(frame);
+    });
+  }
+
   /* ── Аккордеон ─────────────────────────────────────────────────── */
 
   for (const btn of $$('.faq__q')) {

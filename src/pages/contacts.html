@@ -18,11 +18,12 @@
 <section class="section">
   <div class="wrap">
     <div class="place reveal">
-      <div class="place__map">
+      <div class="place__map map" data-map="{{ site.address.mapEmbed }}">
         <div class="place__pin">
           <img src="/assets/img/mark-cream.png" alt="" width="857" height="1193" loading="lazy" />
           <p style="font-size: var(--step-1)">{{ site.address.full }}</p>
           <p style="font-size: var(--step--1); opacity: 0.8">{{ site.campus }}</p>
+          <button class="btn btn--cream map__btn" type="button">Показать карту</button>
         </div>
       </div>
 
@@ -170,12 +171,31 @@
     <div class="reveal" style="margin-top: clamp(2.5rem, 6vw, 4rem)">
       <dl class="dl">
         <div>
-          <dt>Организация</dt>
+          <dt>Статус</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.status }}</dd>
+        </div>
+        <div>
+          <dt>Наименование</dt>
           <dd style="font-size: var(--step-0)">{{ site.legal.entity }}</dd>
         </div>
-        <div><dt>ОГРН</dt><dd>{{ site.legal.ogrn }}</dd></div>
-        <div><dt>ИНН</dt><dd>{{ site.legal.inn }}</dd></div>
-        <div><dt>КПП</dt><dd>{{ site.legal.kpp }}</dd></div>
+        <div>
+          <dt>Руководитель</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.leader }}</dd>
+        </div>
+        <div>
+          <dt>Ведомственный номер</dt>
+          <dd>{{ site.legal.regNumber }}</dd>
+        </div>
+        <div>
+          <dt>Уведомление</dt>
+          <dd style="font-size: var(--step-0)">
+            Принято {{ site.legal.regDate }}, {{ site.legal.regAuthority }}
+          </dd>
+        </div>
+        <div>
+          <dt>Объединение</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.union }}</dd>
+        </div>
       </dl>
     </div>
   </div>

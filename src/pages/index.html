@@ -11,7 +11,7 @@
 
   <div class="wrap wrap--wide hero__inner">
     <p class="hero__meta">
-      <span>{{ site.city }}</span><span>{{ site.campus }}</span><span>Церковь ХВЕ</span>
+      <span>{{ site.city }}</span><span>{{ site.campus }}</span><span>{{ site.legal.unionShort }}</span>
     </p>
 
     <div class="hero__type">
@@ -304,10 +304,11 @@
     </div>
 
     <div class="place reveal">
-      <div class="place__map">
+      <div class="place__map map" data-map="{{ site.address.mapEmbed }}">
         <div class="place__pin">
           <img src="/assets/img/mark-cream.png" alt="" width="857" height="1193" loading="lazy" />
           <p style="font-size: var(--step-1)">{{ site.address.full }}</p>
+          <button class="btn btn--cream map__btn" type="button">Показать карту</button>
         </div>
       </div>
 

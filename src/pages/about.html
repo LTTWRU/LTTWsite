@@ -258,12 +258,31 @@
     <div class="reveal">
       <dl class="dl">
         <div>
-          <dt>Организация</dt>
+          <dt>Статус</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.status }}</dd>
+        </div>
+        <div>
+          <dt>Наименование</dt>
           <dd style="font-size: var(--step-0)">{{ site.legal.entity }}</dd>
         </div>
-        <div><dt>ОГРН</dt><dd>{{ site.legal.ogrn }}</dd></div>
-        <div><dt>ИНН</dt><dd>{{ site.legal.inn }}</dd></div>
-        <div><dt>КПП</dt><dd>{{ site.legal.kpp }}</dd></div>
+        <div>
+          <dt>Руководитель</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.leader }}</dd>
+        </div>
+        <div>
+          <dt>Ведомственный номер</dt>
+          <dd>{{ site.legal.regNumber }}</dd>
+        </div>
+        <div>
+          <dt>Уведомление</dt>
+          <dd style="font-size: var(--step-0)">
+            Принято {{ site.legal.regDate }}, {{ site.legal.regAuthority }}
+          </dd>
+        </div>
+        <div>
+          <dt>Объединение</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.union }}</dd>
+        </div>
       </dl>
     </div>
   </div>
