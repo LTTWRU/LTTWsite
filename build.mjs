@@ -156,6 +156,28 @@ function derive(site) {
     ? `${DAY_NAMES[daysOf(main)[0]]}, ${main.time}`
     : '';
 
+  // Пасторов может быть несколько — имена склеиваем по-русски, через «и»
+  const pastors = site.pastors ?? [];
+  site.pastorNames = pastors
+    .map((p) => p.name)
+    .reduce((acc, name, i, all) =>
+      i === 0 ? name : i === all.length - 1 ? `${acc} и ${name}` : `${acc}, ${name}`
+    , '');
+
+  site.pastorsJsonLd = JSON.stringify(
+    pastors.map((p) => ({ '@type': 'Person', name: p.name, jobTitle: p.role }))
+  );
+
+  site.pastorsHtml = pastors
+    .map(
+      (p, i) =>
+        `<article class="card reveal" style="--i: ${i}">\n` +
+        `        <p class="card__index">${p.role}</p>\n` +
+        `        <h3 class="card__title">${p.name}</h3>\n` +
+        `      </article>`
+    )
+    .join('\n      ');
+
   // Только те площадки, у которых в конфиге действительно стоит адрес
   const links = Object.entries(SOCIAL).filter(([key]) => site.social?.[key]);
 

@@ -1458,6 +1458,67 @@ body.no-scroll .header .brand__lockup--brand {
   color: var(--fg-soft);
 }
 
+/* ── Символ веры ──────────────────────────────────────────────────
+   Тот же аккордеон, но заголовком служит первая строка символа: она
+   и есть цитата, и она же — кнопка «читать целиком». */
+
+.creed__q {
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.creed__lead {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+}
+
+.creed__cite {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.creed .faq__icon {
+  margin-top: 0.35rem;
+}
+
+/* Двенадцать членов символа — нумерация здесь не украшение:
+   именно так его разбирают и на него ссылаются. */
+.creed__full {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0.35rem clamp(1.15rem, 2.6vw, 1.7rem) clamp(1.4rem, 2.6vw, 1.8rem);
+  max-width: 62ch;
+  list-style: none;
+  counter-reset: creed;
+}
+
+.creed__full li {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0 0.9rem;
+  color: var(--fg-soft);
+  line-height: 1.55;
+}
+
+.creed__full li::before {
+  counter-increment: creed;
+  content: counter(creed);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-text);
+  padding-top: 0.5em;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Блок «впервые» ───────────────────────────────────────────────── */
 
 .invite {
