@@ -194,14 +194,26 @@ function derive(site) {
   );
 
   site.pastorsHtml = pastors
-    .map(
-      (p, i) =>
+    .map((p, i) => {
+      const photo = p.photo
+        ? `<img class="card__photo" src="${p.photo}" alt="${p.name}" loading="lazy" />\n        `
+        : '';
+      return (
         `<article class="card reveal" style="--i: ${i}">\n` +
-        `        <p class="card__index">${p.role}</p>\n` +
+        `        ${photo}<p class="card__index">${p.role}</p>\n` +
         `        <h3 class="card__title">${p.name}</h3>\n` +
         `      </article>`
-    )
+      );
+    })
     .join('\n      ');
+
+  // Фото входа — самая полезная картинка на сайте: по ней человек узнаёт дверь
+  site.entranceHtml = site.photos?.entrance
+    ? `<figure class="shot reveal">\n` +
+      `      <img src="${site.photos.entrance}" alt="Вход в здание, где собирается церковь «Свет миру»" loading="lazy" />\n` +
+      `      <figcaption>Ищите эту дверь — мы за ней</figcaption>\n` +
+      `    </figure>`
+    : '';
 
   // Только те площадки, у которых в конфиге действительно стоит адрес
   const links = Object.entries(SOCIAL).filter(([key]) => site.social?.[key]);
