@@ -1,0 +1,72 @@
+<footer class="footer">
+  <div class="wrap wrap--wide">
+    <div class="footer__top">
+      <div class="footer__col">
+        <img
+          class="footer__logo"
+          src="/assets/img/logo-lockup-cream.png"
+          alt="{{ site.name }}"
+          width="1793"
+          height="623"
+          loading="lazy"
+        />
+        <p class="prose" style="max-width: 30ch">
+          {{ site.motto }}. Мы ждём вас в воскресенье в 11:00 — приходите так,
+          как есть.
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h3>Разделы</h3>
+        <ul class="footer__list">
+          <li><a href="/about.html">О церкви</a></li>
+          <li><a href="/new.html">Я впервые</a></li>
+          <li><a href="/ministries.html">Служения</a></li>
+          <li><a href="/media.html">Медиа</a></li>
+          <li><a href="/contacts.html">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3>Контакты</h3>
+        <ul class="footer__list">
+          <li><a href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a></li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li>{{ site.address.full }}</li>
+          <li>Приёмная: {{ site.office }}</li>
+        </ul>
+
+        <div class="socials" style="margin-top: 1.25rem">
+          <a href="{{ site.social.telegram }}" aria-label="Telegram" rel="noopener noreferrer" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21.9 4.3 18.9 19c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.5-7.7c.4-.3-.1-.5-.6-.2L6.9 13 2.4 11.6c-1-.3-1-1 .2-1.4l18-7c.8-.3 1.5.2 1.3 1.1z" />
+            </svg>
+          </a>
+          <a href="{{ site.social.vk }}" aria-label="ВКонтакте" rel="noopener noreferrer" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.8 16.9c-5.3 0-8.6-3.7-8.7-9.8h2.7c.1 4.5 2.2 6.4 3.8 6.8V7.1h2.6v3.9c1.5-.2 3.1-1.9 3.6-3.9h2.5c-.4 2.4-2.1 4.1-3.2 4.8 1.2.6 3.1 2.1 3.8 5h-2.8c-.6-1.8-2-3.2-3.9-3.4v3.4h-.4z" />
+            </svg>
+          </a>
+          <a href="{{ site.social.youtube }}" aria-label="YouTube" rel="noopener noreferrer" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12s0-3.2-.4-4.7c-.2-.9-.9-1.5-1.7-1.7C18.3 5.2 12 5.2 12 5.2s-6.3 0-7.9.4c-.8.2-1.5.8-1.7 1.7C2 8.8 2 12 2 12s0 3.2.4 4.7c.2.9.9 1.5 1.7 1.7 1.6.4 7.9.4 7.9.4s6.3 0 7.9-.4c.8-.2 1.5-.8 1.7-1.7.4-1.5.4-4.7.4-4.7zM10 15V9l5.2 3-5.2 3z" />
+            </svg>
+          </a>
+          <a href="{{ site.social.whatsapp }}" aria-label="WhatsApp" rel="noopener noreferrer" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.1 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.1-.7-2.6-1.1-4.2-3.7-4.3-3.9-.1-.2-1-1.3-1-2.5s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.1.3.7 1.2 1.5 1.9 1 .9 1.8 1.2 2.1 1.3.2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1.9z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>
+        {{ site.legal.entity }}.<br />
+        ОГРН {{ site.legal.ogrn }} · ИНН {{ site.legal.inn }} · КПП {{ site.legal.kpp }}
+      </p>
+      <p>© <span id="year">2026</span> {{ site.shortName }}</p>
+    </div>
+  </div>
+</footer>

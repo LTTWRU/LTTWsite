@@ -1,0 +1,14 @@
+{
+  "name": "Церковь «Свет миру» — Новосибирск",
+  "short_name": "Свет миру",
+  "description": "Место свободы и исцеления. Воскресное служение в 11:00.",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f2dc",
+  "theme_color": "#dc5213",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/assets/img/mark.png", "sizes": "857x1193", "type": "image/png" }
+  ]
+}

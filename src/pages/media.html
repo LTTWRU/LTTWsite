@@ -1,0 +1,145 @@
+<!--{
+  "title": "Медиа",
+  "description": "Проповеди, записи служений и материалы церкви «Свет миру». Смотрите онлайн или слушайте в дороге.",
+  "changefreq": "weekly",
+  "priority": 0.7
+}-->
+
+<section class="page-head">
+  <div class="wrap wrap--wide page-head__inner">
+    <p class="crumbs"><a href="/">Главная</a> <span aria-hidden="true">/</span> Медиа</p>
+    <h1 class="page-head__title">Слово,<br />которое остаётся</h1>
+    <p class="page-head__lede">
+      Записи служений, проповеди и разборы Писания. Можно смотреть, а можно
+      просто слушать в дороге.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">01 — Последнее служение</p></div>
+      <div><h2 class="lede">Смотреть запись</h2></div>
+    </div>
+
+    <!--
+      Как вставить видео:
+      замените блок ниже на <iframe> с YouTube / VK Видео / Rutube.
+      Обязательно оставьте loading="lazy" и title — это влияет на скорость
+      загрузки страницы и на доступность.
+
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/ВИДЕО_ID"
+                title="Воскресное служение"
+                loading="lazy" allowfullscreen></iframe>
+      </div>
+    -->
+    <div class="place__map reveal" style="min-height: clamp(16rem, 42vw, 26rem)">
+      <div class="place__pin">
+        <img src="/assets/img/mark-cream.png" alt="" width="857" height="1193" loading="lazy" />
+        <p style="font-size: var(--step-1); max-width: 28ch">
+          Здесь появится запись ближайшего воскресного служения
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-dark">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal"><p class="eyebrow">02 — Где нас слушать</p></div>
+      <div class="reveal"><h2 class="lede">Выберите площадку</h2></div>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card card--link reveal" style="--i: 0">
+        <p class="card__index">Видео</p>
+        <h3 class="card__title">YouTube</h3>
+        <p class="card__text">
+          Полные записи воскресных служений и отдельные проповеди.
+        </p>
+        <a class="link" href="{{ site.social.youtube }}" target="_blank" rel="noopener noreferrer">
+          Открыть канал <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card card--link reveal" style="--i: 1">
+        <p class="card__index">Соцсеть</p>
+        <h3 class="card__title">ВКонтакте</h3>
+        <p class="card__text">
+          Анонсы, фотографии со встреч, короткие фрагменты проповедей.
+        </p>
+        <a class="link" href="{{ site.social.vk }}" target="_blank" rel="noopener noreferrer">
+          Открыть сообщество <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card card--link reveal" style="--i: 2">
+        <p class="card__index">Канал</p>
+        <h3 class="card__title">Telegram</h3>
+        <p class="card__text">
+          Самое быстрое место: расписание, изменения, молитвенные нужды.
+        </p>
+        <a class="link" href="{{ site.social.telegram }}" target="_blank" rel="noopener noreferrer">
+          Подписаться <span aria-hidden="true">→</span>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">03 — Циклы</p></div>
+      <div><h2 class="lede">Проповеди по темам</h2></div>
+    </div>
+
+    <div class="reveal">
+      <div class="slot">
+        <span class="slot__time">01</span>
+        <span class="slot__title">Свобода</span>
+        <span class="slot__day">Цикл</span>
+        <p class="slot__note">
+          О зависимостях, стыде и страхе — и о том, что с ними делает Христос.
+        </p>
+      </div>
+      <div class="slot">
+        <span class="slot__time">02</span>
+        <span class="slot__title">Основания веры</span>
+        <span class="slot__day">Цикл</span>
+        <p class="slot__note">
+          Базовый курс для тех, кто пришёл недавно: кто такой Бог, что такое
+          Евангелие, зачем церковь.
+        </p>
+      </div>
+      <div class="slot">
+        <span class="slot__time">03</span>
+        <span class="slot__title">Разбор Евангелия</span>
+        <span class="slot__day">Среда</span>
+        <p class="slot__note">
+          Последовательное чтение по главам с вопросами и обсуждением.
+        </p>
+      </div>
+      <hr class="rule" />
+    </div>
+  </div>
+</section>
+
+<section class="section on-brand">
+  <div class="wrap cta reveal">
+    <p class="eyebrow" style="justify-content: center">Живьём лучше</p>
+    <h2 class="cta__title">Запись не заменит<br />живого зала</h2>
+    <p class="prose" style="text-align: center; max-width: 42ch; color: var(--fg-soft)">
+      Воскресенье, 11:00, {{ site.address.full }}. Приходите — это совсем
+      другое ощущение.
+    </p>
+    <div>
+      <a class="btn btn--cream" href="/new.html">
+        Я приду впервые <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

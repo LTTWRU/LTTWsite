@@ -1,0 +1,75 @@
+<header class="header">
+  <div class="wrap wrap--wide header__inner">
+    <a class="brand" href="/" aria-label="{{ site.name }} — на главную">
+      <img
+        class="brand__lockup brand__lockup--cream"
+        src="/assets/img/logo-lockup-cream.png"
+        alt=""
+        width="1793"
+        height="623"
+      />
+      <img
+        class="brand__lockup brand__lockup--brand"
+        src="/assets/img/logo-lockup.png"
+        alt="{{ site.name }}"
+        width="1793"
+        height="623"
+      />
+    </a>
+
+    <nav class="nav" aria-label="Основное меню">
+      <a class="nav__link" data-nav="about" href="/about.html">О церкви</a>
+      <a class="nav__link" data-nav="new" href="/new.html">Я впервые</a>
+      <a class="nav__link" data-nav="ministries" href="/ministries.html">Служения</a>
+      <a class="nav__link" data-nav="media" href="/media.html">Медиа</a>
+      <a class="nav__link" data-nav="contacts" href="/contacts.html">Контакты</a>
+    </nav>
+
+    <button class="icon-btn theme-toggle" type="button" aria-label="Переключить тему">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9" stroke-linecap="round" />
+      </svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M20 14.2A8.4 8.4 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <a class="btn header__cta" href="/new.html">
+      Я приду впервые
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </a>
+
+    <button class="icon-btn burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Меню">
+      <svg class="icon-burger" width="20" height="20" viewBox="0 0 20 20" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M2 5h16M2 10h16M2 15h16" />
+      </svg>
+      <svg class="icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 4l12 12M16 4L4 16" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Мобильное меню">
+    <ul class="menu__list">
+      <li><a class="menu__link" style="--i: 0" data-nav="index" href="/">Главная</a></li>
+      <li><a class="menu__link" style="--i: 1" data-nav="about" href="/about.html">О церкви</a></li>
+      <li><a class="menu__link" style="--i: 2" data-nav="new" href="/new.html">Я впервые</a></li>
+      <li><a class="menu__link" style="--i: 3" data-nav="ministries" href="/ministries.html">Служения</a></li>
+      <li><a class="menu__link" style="--i: 4" data-nav="media" href="/media.html">Медиа</a></li>
+      <li><a class="menu__link" style="--i: 5" data-nav="contacts" href="/contacts.html">Контакты</a></li>
+    </ul>
+  </nav>
+
+  <div class="menu__foot">
+    <a href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a>
+    <span>{{ site.address.full }}</span>
+    <span>Воскресенье, 11:00</span>
+  </div>
+</div>

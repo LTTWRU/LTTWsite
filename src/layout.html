@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru" data-theme="light" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{ page.title }} — {{ site.name }}, {{ site.city }}</title>
+    <meta name="description" content="{{ page.description }}" />
+    <link rel="canonical" href="{{ page.canonical }}" />
+
+    <meta name="theme-color" content="#dc5213" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{ site.name }}" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="{{ page.title }} — {{ site.name }}" />
+    <meta property="og:description" content="{{ page.description }}" />
+    <meta property="og:url" content="{{ page.canonical }}" />
+    <meta property="og:image" content="{{ site.url }}/assets/img/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/img/mark.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jost-cyrillic.woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <script>
+      // Тема ставится до первой отрисовки, чтобы не было вспышки светлого фона.
+      document.documentElement.classList.remove('no-js');
+      try {
+        var t = localStorage.getItem('svetmiru-theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+
+    <script type="application/json" id="site-data">
+      { "services": {{ site.services }}, "utcOffset": {{ site.utcOffset }}, "phoneRaw": "{{ site.phoneRaw }}" }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Church",
+        "name": "{{ site.name }}",
+        "alternateName": "{{ site.shortName }}",
+        "slogan": "{{ site.tagline }}",
+        "url": "{{ site.url }}",
+        "logo": "{{ site.url }}/assets/img/mark.png",
+        "image": "{{ site.url }}/assets/img/og.png",
+        "telephone": "{{ site.phoneRaw }}",
+        "email": "{{ site.email }}",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "{{ site.city }}",
+          "streetAddress": "{{ site.address.street }}",
+          "addressCountry": "RU"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": {{ site.address.lat }},
+          "longitude": {{ site.address.lon }}
+        },
+        "openingHours": "Su 11:00-13:00",
+        "founder": { "@type": "Person", "name": "{{ site.pastor.name }}" }
+      }
+    </script>
+
+    <script src="/assets/js/main.js" defer></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">К основному содержанию</a>
+
+    {{ partial.header }}
+
+    <main id="main">{{ content }}</main>
+
+    {{ partial.footer }}
+  </body>
+</html>

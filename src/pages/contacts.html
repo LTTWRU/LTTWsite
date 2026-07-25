@@ -1,0 +1,153 @@
+<!--{
+  "title": "Контакты",
+  "description": "Адрес, телефон и время служений церкви «Свет миру» в Новосибирске. Напишите нам — ответит живой человек.",
+  "changefreq": "monthly",
+  "priority": 0.8
+}-->
+
+<section class="page-head">
+  <div class="wrap wrap--wide page-head__inner">
+    <p class="crumbs"><a href="/">Главная</a> <span aria-hidden="true">/</span> Контакты</p>
+    <h1 class="page-head__title">Давайте<br />знакомиться</h1>
+    <p class="page-head__lede">
+      Напишите или позвоните — на той стороне живой человек, а не автоответчик.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="place reveal">
+      <div class="place__map">
+        <div class="place__pin">
+          <img src="/assets/img/mark-cream.png" alt="" width="857" height="1193" loading="lazy" />
+          <p style="font-size: var(--step-1)">{{ site.address.full }}</p>
+          <p style="font-size: var(--step--1); opacity: 0.8">{{ site.campus }}</p>
+        </div>
+      </div>
+
+      <div>
+        <dl class="dl">
+          <div>
+            <dt>Адрес</dt>
+            <dd>{{ site.address.full }}</dd>
+          </div>
+          <div>
+            <dt>Телефон</dt>
+            <dd><a class="link" href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a></dd>
+          </div>
+          <div>
+            <dt>Почта</dt>
+            <dd><a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a></dd>
+          </div>
+          <div>
+            <dt>Приёмная</dt>
+            <dd>{{ site.office }}</dd>
+          </div>
+          <div>
+            <dt>Служения</dt>
+            <dd>Вс 11:00 · Ср 19:00 · Пт 19:00</dd>
+          </div>
+        </dl>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem">
+          <a class="btn btn--ghost" href="{{ site.address.maps2gis }}" target="_blank" rel="noopener noreferrer">
+            2ГИС
+          </a>
+          <a class="btn btn--ghost" href="{{ site.address.mapsYandex }}" target="_blank" rel="noopener noreferrer">
+            Яндекс Карты
+          </a>
+          <a class="btn btn--ghost" href="{{ site.social.whatsapp }}" target="_blank" rel="noopener noreferrer">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-dark">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal"><p class="eyebrow">Карта связи</p></div>
+      <div class="reveal">
+        <h2 class="lede">Расскажите о себе — мы ответим</h2>
+      </div>
+    </div>
+
+    <form class="form reveal" id="connect-form" novalidate>
+      <div class="field">
+        <label for="f-name">Как вас зовут</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label for="f-contact">Телефон или ник в мессенджере</label>
+        <input id="f-contact" name="contact" type="text" autocomplete="tel" required />
+      </div>
+
+      <div class="field">
+        <label for="f-topic">О чём хотите поговорить</label>
+        <select id="f-topic" name="topic">
+          <option>Хочу прийти впервые</option>
+          <option>Подобрать домашнюю группу</option>
+          <option>Нужна молитва</option>
+          <option>Нужна помощь</option>
+          <option>Хочу служить в команде</option>
+          <option>Другое</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="f-message">Сообщение</label>
+        <textarea id="f-message" name="message" rows="4"></textarea>
+      </div>
+
+      <div>
+        <button class="btn" type="submit">
+          Отправить в WhatsApp <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <p class="form__note" id="form-status" role="status">
+        Кнопка откроет WhatsApp с готовым текстом. Ничего не отправится, пока вы
+        сами не нажмёте «Отправить» — сайт не хранит и никуда не передаёт ваши
+        данные.
+      </p>
+    </form>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">Поддержать</p></div>
+      <div style="display: grid; gap: 2rem">
+        <h2 class="lede">Пожертвования</h2>
+        <div class="prose">
+          <p>
+            Служение церкви держится на добровольных пожертвованиях её членов.
+            <strong>С гостей мы ничего не собираем</strong> — если вы у нас
+            впервые, этот раздел не про вас.
+          </p>
+          <p>
+            Реквизиты для перевода можно взять в приёмной или запросить по
+            телефону <a class="link" href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top: clamp(2.5rem, 6vw, 4rem)">
+      <dl class="dl">
+        <div>
+          <dt>Организация</dt>
+          <dd style="font-size: var(--step-0)">{{ site.legal.entity }}</dd>
+        </div>
+        <div><dt>ОГРН</dt><dd>{{ site.legal.ogrn }}</dd></div>
+        <div><dt>ИНН</dt><dd>{{ site.legal.inn }}</dd></div>
+        <div><dt>КПП</dt><dd>{{ site.legal.kpp }}</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
