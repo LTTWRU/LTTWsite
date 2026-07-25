@@ -272,7 +272,8 @@
 
       if (live) {
         countdown.classList.add('is-live');
-        countdown.innerHTML = `<span class="countdown__num">Идёт сейчас</span>`;
+        countdown.innerHTML =
+          '<span class="countdown__unit"><span class="countdown__num">Идёт сейчас</span></span>';
         if (label) label.textContent = `${live.title} — прямо сейчас`;
         return;
       }
