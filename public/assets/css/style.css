@@ -1139,6 +1139,13 @@ body.no-scroll .header .brand__lockup--brand {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
 }
 
+/* Для наборов, число которых зависит от конфига: карточки не растягиваются
+   на всю ширину, если осталась одна, и выравниваются по левому краю. */
+.grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 24rem));
+  justify-content: start;
+}
+
 .card {
   position: relative;
   display: grid;

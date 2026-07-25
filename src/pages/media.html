@@ -10,8 +10,8 @@
     <p class="crumbs"><a href="/">Главная</a> <span aria-hidden="true">/</span> Медиа</p>
     <h1 class="page-head__title">Слово,<br />которое остаётся</h1>
     <p class="page-head__lede">
-      Записи служений, проповеди и разборы Писания. Можно смотреть, а можно
-      просто слушать в дороге.
+      Записи служений и проповеди. Можно смотреть, а можно просто слушать
+      в дороге.
     </p>
   </div>
 </section>
@@ -50,45 +50,19 @@
   <div class="wrap">
     <div class="section-head">
       <div class="reveal"><p class="eyebrow">02 — Где нас слушать</p></div>
-      <div class="reveal"><h2 class="lede">Выберите площадку</h2></div>
+      <div class="reveal"><h2 class="lede">Где мы публикуемся</h2></div>
     </div>
 
-    <div class="grid grid--3">
-      <article class="card card--link reveal" style="--i: 0">
-        <p class="card__index">Видео</p>
-        <h3 class="card__title">YouTube</h3>
-        <p class="card__text">
-          Полные записи воскресных служений и отдельные проповеди.
-        </p>
-        <a class="link" href="{{ site.social.youtube }}" target="_blank" rel="noopener noreferrer">
-          Открыть канал <span aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <article class="card card--link reveal" style="--i: 1">
-        <p class="card__index">Соцсеть</p>
-        <h3 class="card__title">ВКонтакте</h3>
-        <p class="card__text">
-          Анонсы, фотографии со встреч, короткие фрагменты проповедей.
-        </p>
-        <a class="link" href="{{ site.social.vk }}" target="_blank" rel="noopener noreferrer">
-          Открыть сообщество <span aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <article class="card card--link reveal" style="--i: 2">
-        <p class="card__index">Канал</p>
-        <h3 class="card__title">Telegram</h3>
-        <p class="card__text">
-          Самое быстрое место: расписание, изменения, молитвенные нужды.
-        </p>
-        <a class="link" href="{{ site.social.telegram }}" target="_blank" rel="noopener noreferrer">
-          Подписаться <span aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Карточки собираются из непустых ссылок в site.config.json -->
+    <div class="grid grid--auto">
+      {{ site.mediaCardsHtml }}
     </div>
   </div>
 </section>
+
+<!--
+  Здесь хорошо смотрелся бы список циклов проповедей — когда они появятся,
+  раскомментируйте блок и замените содержимое на настоящие темы.
 
 <section class="section">
   <div class="wrap">
@@ -100,33 +74,15 @@
     <div class="reveal">
       <div class="slot">
         <span class="slot__time">01</span>
-        <span class="slot__title">Свобода</span>
+        <span class="slot__title">Название цикла</span>
         <span class="slot__day">Цикл</span>
-        <p class="slot__note">
-          О зависимостях, стыде и страхе — и о том, что с ними делает Христос.
-        </p>
-      </div>
-      <div class="slot">
-        <span class="slot__time">02</span>
-        <span class="slot__title">Основания веры</span>
-        <span class="slot__day">Цикл</span>
-        <p class="slot__note">
-          Базовый курс для тех, кто пришёл недавно: кто такой Бог, что такое
-          Евангелие, зачем церковь.
-        </p>
-      </div>
-      <div class="slot">
-        <span class="slot__time">03</span>
-        <span class="slot__title">Разбор Евангелия</span>
-        <span class="slot__day">Среда</span>
-        <p class="slot__note">
-          Последовательное чтение по главам с вопросами и обсуждением.
-        </p>
+        <p class="slot__note">Одно предложение о том, чему он посвящён.</p>
       </div>
       <hr class="rule" />
     </div>
   </div>
 </section>
+-->
 
 <section class="section on-brand">
   <div class="wrap cta reveal">

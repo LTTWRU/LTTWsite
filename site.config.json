@@ -65,12 +65,12 @@
     "role": "Пастор церкви"
   },
 
+  "_social_help": "Пустая строка = площадки нет. Такие ссылки нигде не показываются: ни иконкой в подвале, ни карточкой на странице «Медиа». Появится канал — впишите адрес, и блоки соберутся сами.",
   "social": {
-    "telegram": "https://t.me/",
+    "vk": "https://vk.ru/lttw_54",
     "whatsapp": "https://wa.me/79019220007",
-    "vk": "https://vk.com/",
-    "youtube": "https://youtube.com/",
-    "instagram": ""
+    "telegram": "",
+    "youtube": ""
   },
 
   "legal": {
