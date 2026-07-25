@@ -1237,9 +1237,21 @@ body.no-scroll .header .brand__lockup--brand {
 .slot__time {
   font-family: var(--font-display);
   font-size: var(--step-2);
+  line-height: 1.05;
   color: var(--accent);
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
+}
+
+/* Время окончания — второй строкой, чтобы диапазон не ломал колонку */
+.slot__time small {
+  display: block;
+  margin-top: 0.15em;
+  font-family: var(--font-text);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
 }
 
 .slot__title {

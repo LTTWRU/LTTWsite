@@ -73,6 +73,11 @@ const DAY_NAMES = [
   'Суббота',
 ];
 
+const DAY_SHORT = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+
+/** Одна встреча может идти в несколько дней — «Вт, Чт» это одна строка расписания. */
+const daysOf = (service) => service.days ?? [service.day];
+
 /**
  * Достраивает конфиг вычисляемыми полями, чтобы расписание жило ровно в одном
  * месте: и список на главной, и строка в контактах, и обратный отсчёт берутся
@@ -82,23 +87,38 @@ function derive(site) {
   const services = site.services ?? [];
 
   site.scheduleHtml = services
-    .map(
-      (s) =>
+    .map((s) => {
+      const days = daysOf(s);
+      // Один день пишем словом, несколько — сокращениями, иначе строка не влезает
+      const label =
+        days.length === 1
+          ? DAY_NAMES[days[0]]
+          : days.map((d) => DAY_SHORT[d]).join(' · ');
+      const till = s.till ? `<small>до ${s.till}</small>` : '';
+
+      return (
         `<div class="slot">\n` +
-        `        <span class="slot__time">${s.time}</span>\n` +
+        `        <span class="slot__time">${s.time}${till}</span>\n` +
         `        <span class="slot__title">${s.title}</span>\n` +
-        `        <span class="slot__day">${DAY_NAMES[s.day]}</span>\n` +
+        `        <span class="slot__day">${label}</span>\n` +
         `        <p class="slot__note">${s.note}</p>\n` +
         `      </div>`
-    )
+      );
+    })
     .join('\n      ');
 
   site.scheduleShort = services
-    .map((s) => `${s.short ?? DAY_NAMES[s.day]} ${s.time}`)
+    .map(
+      (s) =>
+        `${daysOf(s).map((d) => DAY_SHORT[d]).join(', ')} ${s.time}` +
+        (s.till ? `–${s.till}` : '')
+    )
     .join(' · ');
 
   const main = services[0];
-  site.primaryService = main ? `${DAY_NAMES[main.day]}, ${main.time}` : '';
+  site.primaryService = main
+    ? `${DAY_NAMES[daysOf(main)[0]]}, ${main.time}`
+    : '';
 
   return site;
 }

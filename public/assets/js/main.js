@@ -210,6 +210,9 @@
     'Суббота',
   ];
 
+  /** Дни встречи: одна запись расписания может идти в несколько дней недели. */
+  const daysOf = (service) => service.days ?? [service.day];
+
   /** Ближайшее по времени служение из расписания. */
   function nextService(services, offsetHours) {
     const nowMs = Date.now();
@@ -218,6 +221,7 @@
 
     for (const service of services) {
       const [hh, mm] = service.time.split(':').map(Number);
+      const days = daysOf(service);
 
       for (let add = 0; add <= 7; add++) {
         const local = new Date(
@@ -229,34 +233,39 @@
             mm
           )
         );
-        if (local.getUTCDay() !== service.day) continue;
+        if (!days.includes(local.getUTCDay())) continue;
 
         const ms = local.getTime() - offsetHours * 3600e3; // обратно в реальный UTC
         if (ms <= nowMs) continue;
-        if (!best || ms < best.ms) best = { ms, service };
+        if (!best || ms < best.ms) best = { ms, service, day: local.getUTCDay() };
         break;
       }
     }
     return best;
   }
 
-  /** Идёт ли какое-то служение прямо сейчас (окно — 90 минут от старта). */
+  /** Идёт ли встреча прямо сейчас. Длительность берём из `till`, иначе 90 минут. */
   function liveNow(services, offsetHours) {
     const nowMs = Date.now();
     const shifted = new Date(nowMs + offsetHours * 3600e3);
 
     return services.find((service) => {
+      if (!daysOf(service).includes(shifted.getUTCDay())) return false;
+
       const [hh, mm] = service.time.split(':').map(Number);
-      if (shifted.getUTCDay() !== service.day) return false;
-      const start =
-        Date.UTC(
-          shifted.getUTCFullYear(),
-          shifted.getUTCMonth(),
-          shifted.getUTCDate(),
-          hh,
-          mm
-        ) - offsetHours * 3600e3;
-      return nowMs >= start && nowMs < start + 90 * 60e3;
+      const day = [
+        shifted.getUTCFullYear(),
+        shifted.getUTCMonth(),
+        shifted.getUTCDate(),
+      ];
+      const start = Date.UTC(...day, hh, mm) - offsetHours * 3600e3;
+
+      const end = service.till
+        ? Date.UTC(...day, ...service.till.split(':').map(Number)) -
+          offsetHours * 3600e3
+        : start + 90 * 60e3;
+
+      return nowMs >= start && nowMs < end;
     });
   }
 
@@ -283,9 +292,10 @@
       if (!next) return;
 
       if (label) {
-        label.textContent = `${next.service.title} · ${
-          DAY_NAMES[next.service.day]
-        }, ${next.service.time}`;
+        const till = next.service.till ? `–${next.service.till}` : '';
+        label.textContent = `${next.service.title} · ${DAY_NAMES[next.day]}, ${
+          next.service.time
+        }${till}`;
       }
 
       let left = Math.max(0, next.ms - Date.now());
