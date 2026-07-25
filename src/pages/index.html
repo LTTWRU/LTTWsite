@@ -38,11 +38,11 @@
     <div class="hero__foot">
       <div>
         <p class="countdown__label" id="countdown-label" style="margin-bottom: 0.7rem">
-          Воскресное служение · Воскресенье, 11:00
+          {{ site.services.0.title }} · {{ site.primaryService }}
         </p>
         <div class="countdown" aria-live="off">
           <span class="countdown__unit">
-            <span class="countdown__num">11:00</span>
+            <span class="countdown__num">{{ site.services.0.time }}</span>
             <span class="countdown__label">воскресенье</span>
           </span>
         </div>
@@ -81,37 +81,9 @@
       </div>
     </div>
 
+    <!-- Список строится из services в site.config.json — править там. -->
     <div class="reveal">
-      <div class="slot">
-        <span class="slot__time">11:00</span>
-        <span class="slot__title">Воскресное служение</span>
-        <span class="slot__day">Воскресенье</span>
-        <p class="slot__note">
-          Главная встреча недели: прославление, слово, молитва. Параллельно
-          идёт детское служение — с малышами можно спокойно прийти.
-        </p>
-      </div>
-
-      <div class="slot">
-        <span class="slot__time">19:00</span>
-        <span class="slot__title">Разбор Библии</span>
-        <span class="slot__day">Среда</span>
-        <p class="slot__note">
-          Разбираем Писание по главам, задаём неудобные вопросы и ищем ответы
-          вместе. Формат разговорный, без лекций.
-        </p>
-      </div>
-
-      <div class="slot">
-        <span class="slot__time">19:00</span>
-        <span class="slot__title">Молодёжное служение</span>
-        <span class="slot__day">Пятница</span>
-        <p class="slot__note">
-          Для тех, кому 14–30: музыка, общение, разговор о том, что реально
-          происходит в жизни. И чай. Много чая.
-        </p>
-      </div>
-
+      {{ site.scheduleHtml }}
       <hr class="rule" />
     </div>
   </div>

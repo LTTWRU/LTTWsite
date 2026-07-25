@@ -63,9 +63,49 @@ function splitFrontMatter(raw, file) {
 
 /* ─────────────────────────────── сборка ─────────────────────────────── */
 
+const DAY_NAMES = [
+  'Воскресенье',
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+];
+
+/**
+ * Достраивает конфиг вычисляемыми полями, чтобы расписание жило ровно в одном
+ * месте: и список на главной, и строка в контактах, и обратный отсчёт берутся
+ * из одного массива `services`.
+ */
+function derive(site) {
+  const services = site.services ?? [];
+
+  site.scheduleHtml = services
+    .map(
+      (s) =>
+        `<div class="slot">\n` +
+        `        <span class="slot__time">${s.time}</span>\n` +
+        `        <span class="slot__title">${s.title}</span>\n` +
+        `        <span class="slot__day">${DAY_NAMES[s.day]}</span>\n` +
+        `        <p class="slot__note">${s.note}</p>\n` +
+        `      </div>`
+    )
+    .join('\n      ');
+
+  site.scheduleShort = services
+    .map((s) => `${s.short ?? DAY_NAMES[s.day]} ${s.time}`)
+    .join(' · ');
+
+  const main = services[0];
+  site.primaryService = main ? `${DAY_NAMES[main.day]}, ${main.time}` : '';
+
+  return site;
+}
+
 async function build() {
   const started = Date.now();
-  const site = JSON.parse(await readFile(p('site.config.json'), 'utf8'));
+  const site = derive(JSON.parse(await readFile(p('site.config.json'), 'utf8')));
 
   const layout = await readFile(p('src/layout.html'), 'utf8');
 
