@@ -9,7 +9,10 @@
 
     python3 tools/photo.py portrait исходник.jpg pastor-maksim
     python3 tools/photo.py wide     исходник.jpg entrance
+    python3 tools/photo.py wide     исходник.jpg hall --logo
     python3 tools/photo.py og       исходник.jpg og
+
+Ключ --logo ставит кремовый логотип в левый нижний угол снимка.
 
 Результат кладётся в public/assets/img/photo/ (og — в public/assets/img/).
 Нужен Python 3 и Pillow: pip install Pillow
@@ -89,11 +92,48 @@ def add_og_overlay(img):
     return img.convert('RGB')
 
 
+def add_logo(img, width=0.26, pad=0.045):
+    """Ставит кремовый логотип в левый нижний угол на мягком затемнении.
+
+    Затемнение слабее, чем у превью: там поверх лежит только текст, а здесь
+    под градиентом остаются люди, и их нельзя топить в черноту.
+    """
+    img = img.convert('RGBA')
+    w, h = img.size
+
+    # Затемнение угловое, а не сплошное: слева под логотипом плотное, вправо
+    # почти сходит на нет — так подпись читается, а зал не уходит в темноту.
+    mask = Image.new('L', (w, h), 0)
+    px = mask.load()
+    start = h * 0.55
+    for y in range(int(start), h):
+        v = min(1.0, max(0.0, (y - start) / (h - start))) ** 1.5
+        for x in range(w):
+            side = max(0.0, 1.0 - (x / w) / 0.55) ** 1.4
+            px[x, y] = int(185 * v * (0.28 + 0.72 * side))
+    scrim = Image.new('RGBA', (w, h), (11, 6, 3, 0))
+    scrim.putalpha(mask)
+    img = Image.alpha_composite(img, scrim)
+
+    logo_path = OUT_IMG / 'logo-lockup-cream.png'
+    if not logo_path.exists():
+        print('логотипа нет, ставлю только затемнение')
+        return img.convert('RGB')
+
+    logo = Image.open(logo_path).convert('RGBA')
+    w = int(img.width * width)
+    logo = logo.resize((w, int(logo.height * w / logo.width)), Image.LANCZOS)
+    m = int(img.width * pad)
+    img.paste(logo, (m, img.height - logo.height - m), logo)
+    return img.convert('RGB')
+
+
 def main():
-    if len(sys.argv) != 4 or sys.argv[1] not in PRESETS:
+    if len(sys.argv) not in (4, 5) or sys.argv[1] not in PRESETS:
         sys.exit(__doc__)
 
     preset, src, name = sys.argv[1], Path(sys.argv[2]), sys.argv[3]
+    with_logo = len(sys.argv) == 5 and sys.argv[4] == '--logo'
     if not src.exists():
         sys.exit(f'Нет файла: {src}')
 
@@ -115,6 +155,8 @@ def main():
     img = warm(img)
     if preset == 'og':
         img = add_og_overlay(img)
+    elif with_logo:
+        img = add_logo(img)
 
     jpg = out_dir / f'{name}.jpg'
     webp = out_dir / f'{name}.webp'
