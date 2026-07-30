@@ -215,6 +215,18 @@ function derive(site) {
       `    </figure>`
     : '';
 
+  // Почта необязательна: пустое поле лучше, чем опубликованный мёртвый ящик
+  site.emailFooterHtml = site.email
+    ? `<li><a href="mailto:${site.email}">${site.email}</a></li>`
+    : '';
+
+  site.emailRowHtml = site.email
+    ? `<div>\n` +
+      `            <dt>Почта</dt>\n` +
+      `            <dd><a class="link" href="mailto:${site.email}">${site.email}</a></dd>\n` +
+      `          </div>`
+    : '';
+
   // Только те площадки, у которых в конфиге действительно стоит адрес
   const links = Object.entries(SOCIAL).filter(([key]) => site.social?.[key]);
 

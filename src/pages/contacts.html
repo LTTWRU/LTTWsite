@@ -37,10 +37,7 @@
             <dt>Телефон</dt>
             <dd><a class="link" href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a></dd>
           </div>
-          <div>
-            <dt>Почта</dt>
-            <dd><a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a></dd>
-          </div>
+          {{ site.emailRowHtml }}
           <div>
             <dt>Приёмная</dt>
             <dd>{{ site.office }}</dd>
