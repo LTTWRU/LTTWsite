@@ -49,18 +49,14 @@
         "logo": "{{ site.url }}/assets/img/mark.png",
         "image": "{{ site.url }}/assets/img/og.png",
         "telephone": "{{ site.phoneRaw }}",
-        "email": "{{ site.email }}",
+        {{ site.emailJsonLd }}
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "{{ site.city }}",
           "streetAddress": "{{ site.address.street }}",
           "addressCountry": "RU"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": {{ site.address.lat }},
-          "longitude": {{ site.address.lon }}
-        },
+        {{ site.geoJsonLd }}
         "openingHours": "Su 11:00-13:00",
         "employee": {{ site.pastorsJsonLd }}
       }

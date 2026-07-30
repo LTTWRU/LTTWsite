@@ -156,12 +156,21 @@ function derive(site) {
     ? `${DAY_NAMES[daysOf(main)[0]]}, ${main.time}`
     : '';
 
-  // Карта Яндекса по координатам из конфига. Виджету не нужен API-ключ,
-  // но грузится он только по нажатию — см. .map в main.js.
-  const { lat, lon } = site.address ?? {};
+  // Карта Яндекса. Ключ не нужен, грузится только по нажатию — см. .map в main.js.
+  // Если координаты не заданы, ищем по адресу: Яндекс геокодирует его сам и
+  // ставит метку точнее, чем координаты, взятые на глаз. Как появится точная
+  // точка из 2ГИС — впишите lat/lon, и метка встанет ровно по ней.
+  const { lat, lon, full } = site.address ?? {};
   site.address.mapEmbed =
     lat && lon
       ? `https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=17&pt=${lon},${lat},pm2rdm`
+      : `https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(full ?? '')}&z=17`;
+
+  // Координаты в разметке для поисковиков — только если они настоящие.
+  // Приблизительные хуже, чем никакие: по ним церковь встанет не туда.
+  site.geoJsonLd =
+    lat && lon
+      ? `"geo": { "@type": "GeoCoordinates", "latitude": ${lat}, "longitude": ${lon} },`
       : '';
 
   // Метрика подключается, только если в конфиге есть номер счётчика
@@ -219,6 +228,8 @@ function derive(site) {
   site.emailFooterHtml = site.email
     ? `<li><a href="mailto:${site.email}">${site.email}</a></li>`
     : '';
+
+  site.emailJsonLd = site.email ? `"email": "${site.email}",` : '';
 
   site.emailRowHtml = site.email
     ? `<div>\n` +
