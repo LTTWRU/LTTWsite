@@ -104,6 +104,13 @@ def main():
     img = Image.open(src).convert('RGB')
     original = img.size
 
+    # Не растягиваем маленькие снимки: апскейл только мылит картинку и
+    # раздувает файл, резкости от него не прибавляется.
+    if img.width < w:
+        w = img.width
+        h = int(round(w / (PRESETS[preset][0] / PRESETS[preset][1])))
+        print(f'исходник узкий ({img.width}px) — не растягиваю, оставляю {w}×{h}')
+
     img = crop_to(img, w, h)
     img = warm(img)
     if preset == 'og':
