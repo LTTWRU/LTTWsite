@@ -16,6 +16,7 @@
 import { readFile, writeFile, readdir, mkdir, rm, cp, stat } from 'node:fs/promises';
 import { existsSync, watch } from 'node:fs';
 import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -44,6 +45,33 @@ function interpolate(tpl, data) {
     });
     if (next === out) break;
     out = next;
+  }
+  return out;
+}
+
+/**
+ * Считает короткий отпечаток каждого файла в assets.
+ *
+ * Хостинг отдаёт стили и картинки с кэшем на год — это правильно, но без
+ * отпечатка вернувшийся посетитель ещё год видел бы старую версию сайта.
+ * Отпечаток меняется только когда меняется сам файл, поэтому обновление
+ * доезжает мгновенно, а неизменившееся по-прежнему берётся из кэша.
+ */
+async function fingerprint(dir, base = '') {
+  const out = {};
+  if (!existsSync(dir)) return out;
+
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const rel = base ? `${base}/${entry.name}` : entry.name;
+    const abs = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      Object.assign(out, await fingerprint(abs, rel));
+    } else {
+      out[rel] = createHash('sha1')
+        .update(await readFile(abs))
+        .digest('hex')
+        .slice(0, 8);
+    }
   }
   return out;
 }
@@ -216,13 +244,38 @@ function derive(site) {
     })
     .join('\n      ');
 
-  // Фото входа — самая полезная картинка на сайте: по ней человек узнаёт дверь
-  site.entranceHtml = site.photos?.entrance
-    ? `<figure class="shot reveal">\n` +
-      `      <img src="${site.photos.entrance}" alt="Вход в здание, где собирается церковь «Свет миру»" loading="lazy" />\n` +
-      `      <figcaption>Ищите эту дверь — мы за ней</figcaption>\n` +
+  // Снимок с подписью. WebP отдаём первым — он примерно на треть легче JPEG,
+  // а браузеры без поддержки просто возьмут запасной вариант.
+  const shot = (src, alt, caption, extra = '') => {
+    if (!src) return '';
+    const webp = src.replace(/\.jpe?g$/i, '.webp');
+    const source = existsSync(p('public' + webp))
+      ? `      <source srcset="${webp}" type="image/webp" />\n`
+      : '';
+    return (
+      `<figure class="shot${extra} reveal">\n` +
+      `      <picture>\n${source}` +
+      `        <img src="${src}" alt="${alt}" loading="lazy" />\n` +
+      `      </picture>\n` +
+      `      <figcaption>${caption}</figcaption>\n` +
       `    </figure>`
-    : '';
+    );
+  };
+
+  // Фото входа — самая полезная картинка на сайте: по ней человек узнаёт дверь
+  site.entranceHtml = shot(
+    site.photos?.entrance,
+    'Вход в здание, где собирается церковь «Свет миру»',
+    'Ищите эту дверь — мы за ней'
+  );
+
+  // Фото зала — снимает главный страх новичка: непонятно, куда ты идёшь
+  site.hallHtml = shot(
+    site.photos?.hall,
+    'Зал во время воскресного служения церкви «Свет миру»',
+    'Воскресное служение — обычный зал, обычные люди',
+    ' shot--wide'
+  );
 
   // Почта необязательна: пустое поле лучше, чем опубликованный мёртвый ящик
   site.emailFooterHtml = site.email
@@ -285,6 +338,8 @@ async function build() {
   await mkdir(p('dist'), { recursive: true });
   if (existsSync(p('public'))) await cp(p('public'), p('dist'), { recursive: true });
 
+  const stamps = await fingerprint(p('public/assets'), 'assets');
+
   const pageFiles = (await readdir(p('src/pages'))).filter((f) => f.endsWith('.html'));
   const built = [];
 
@@ -320,8 +375,12 @@ async function build() {
     // одном уровне, поэтому «/что-то» превращается в «что-то» без вариантов.
     // Внешние адреса (https://, //cdn) и якоря (#) не трогаем.
     html = html
-      .replace(/(href|src)="\/(?!\/)/g, '$1="')
-      .replace(/href="(?:index\.html)?"/g, 'href="index.html"');
+      .replace(/(href|src|srcset)="\/(?!\/)/g, '$1="')
+      .replace(/href="(?:index\.html)?"/g, 'href="index.html"')
+      // Отпечаток файла в адресе: кэш на год живёт, но обновления доезжают
+      .replace(/(href|src|srcset)="(assets\/[^"?]+)"/g, (whole, attr, file) =>
+        stamps[file] ? `${attr}="${file}?v=${stamps[file]}"` : whole
+      );
 
     // Отладочная страховка: не оставляем нераскрытых плейсхолдеров в проде.
     const leftovers = [...html.matchAll(/\{\{\s*([\w.]+)\s*\}\}/g)].map((m) => m[1]);

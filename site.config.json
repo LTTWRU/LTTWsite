@@ -74,7 +74,8 @@
   ],
 
   "photos": {
-    "entrance": "/assets/img/photo/entrance.jpg"
+    "entrance": "/assets/img/photo/entrance.jpg",
+    "hall": "/assets/img/photo/hall.jpg"
   },
 
   "_social_help": "Пустая строка = площадки нет. Такие ссылки нигде не показываются: ни иконкой в подвале, ни карточкой на странице «Медиа». Появится канал — впишите адрес, и блоки соберутся сами.",
