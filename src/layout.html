@@ -35,6 +35,16 @@
         var t = localStorage.getItem('svetmiru-theme');
         if (t) document.documentElement.dataset.theme = t;
       } catch (e) {}
+
+      // Блоки появляются при прокрутке, то есть до появления они скрыты.
+      // Прячет их не сам класс reveal, а этот флаг — и он снимается через
+      // две секунды, если main.js так и не отозвался. Иначе любая осечка
+      // со скриптом (не догрузился, отвалилась сеть, старый адрес в кэше)
+      // оставила бы страницу пустой навсегда.
+      document.documentElement.classList.add('anim');
+      window.__revealFailsafe = setTimeout(function () {
+        document.documentElement.classList.remove('anim');
+      }, 2000);
     </script>
 
     <script type="application/json" id="site-data">

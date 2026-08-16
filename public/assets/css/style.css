@@ -2099,19 +2099,21 @@ body.no-scroll .header .brand__lockup--brand {
 
 /* ── Появление при скролле ────────────────────────────────────────── */
 
-.reveal {
+/* Скрывает блоки не сам reveal, а флаг anim на <html>. Флаг ставит
+   встроенный скрипт в head и снимает страховочный таймер, если main.js
+   не отозвался. Без флага текст виден всегда — даже когда скрипты
+   не доехали вовсе. */
+.anim .reveal {
   opacity: 0;
   translate: 0 1.5rem;
+}
+
+.reveal {
   transition: opacity 0.8s var(--ease), translate 0.9s var(--spring);
   transition-delay: calc(var(--i, 0) * 80ms);
 }
 
 .reveal.is-in {
-  opacity: 1;
-  translate: 0 0;
-}
-
-.no-js .reveal {
   opacity: 1;
   translate: 0 0;
 }
@@ -2144,7 +2146,9 @@ body.no-scroll .header .brand__lockup--brand {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal {
+  /* Селектор с .anim, а не голый .reveal: медиазапрос веса не добавляет,
+     и правило, которое прячет блоки, иначе окажется сильнее этого. */
+  .anim .reveal {
     opacity: 1;
     translate: 0 0;
   }

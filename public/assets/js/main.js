@@ -153,6 +153,11 @@
 
   /* ── Появление блоков при скролле ──────────────────────────────── */
 
+  // Скрипт доехал — страховка из head больше не нужна. Снимаем её здесь,
+  // а не в начале файла: к этой строке уже понятно, что код исполнился
+  // целиком и наблюдатель сейчас будет установлен.
+  clearTimeout(window.__revealFailsafe);
+
   const revealables = $$('.reveal');
 
   if (revealables.length && 'IntersectionObserver' in window && !reduceMotion) {
