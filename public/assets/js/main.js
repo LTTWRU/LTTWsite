@@ -413,12 +413,16 @@
     window.ym.l = Date.now();
     const s = document.createElement('script');
     s.async = true;
-    s.src = 'https://mc.yandex.ru/metrika/tag.js';
+    // Номер счётчика идёт в адресе — так Яндекс выдаёт код с 2024 года
+    s.src = 'https://mc.yandex.ru/metrika/tag.js?id=' + id;
     document.head.appendChild(s);
     window.ym(id, 'init', {
       clickmap: true,
       trackLinks: true,
       accurateTrackBounce: true,
+      // Вебвизор пишет и то, что человек набирает в форме. Включается
+      // только осознанно, через metrikaWebvisor в site.config.json.
+      webvisor: data.webvisor === true,
     });
   };
 
