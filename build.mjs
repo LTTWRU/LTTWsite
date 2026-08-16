@@ -201,22 +201,66 @@ function derive(site) {
       ? `"geo": { "@type": "GeoCoordinates", "latitude": ${lat}, "longitude": ${lon} },`
       : '';
 
-  // Метрика подключается, только если в конфиге есть номер счётчика
-  site.metrikaHtml = site.metrikaId
-    ? `<script>
-      (function (m, e, t, r, i, k, a) {
-        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
-        m[i].l = 1 * new Date();
-        for (var j = 0; j < document.scripts.length; j++) {
-          if (document.scripts[j].src === r) return;
-        }
-        k = e.createElement(t); a = e.getElementsByTagName(t)[0];
-        k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
-      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-      ym(${site.metrikaId}, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/${site.metrikaId}" style="position:absolute;left:-9999px" alt="" /></div></noscript>`
+  // Полоска согласия появляется только вместе со счётчиком: нет номера в
+  // конфиге — нет ни одного стороннего запроса, и спрашивать не о чем.
+  // Сам счётчик грузится из main.js и только после нажатия «Принять»:
+  // до этого момента на mc.yandex.ru не уходит ничего.
+  // Пикселя <noscript> здесь намеренно нет — он сработал бы в обход
+  // согласия, а без JavaScript спросить согласие не у кого.
+  site.cookieBarHtml = site.metrikaId
+    ? `<section class="cookie" id="cookie-bar" role="region"
+      aria-label="Согласие на подсчёт посещаемости" hidden>
+      <p class="cookie__text">
+        Хотим считать посещаемость через Яндекс.Метрику — она сохраняет
+        в браузере файлы cookie. Откажетесь — сайт будет работать так же.
+        <a href="/privacy.html">Подробнее о данных</a>
+      </p>
+      <div class="cookie__actions">
+        <button class="btn btn--sm" type="button" data-cookie="yes">Принять</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-cookie="no">
+          Не нужно
+        </button>
+      </div>
+    </section>`
     : '';
+
+  // Текст политики про счётчик обязан совпадать с тем, что на сайте
+  // происходит на самом деле. Поэтому он собирается из конфига, а не
+  // пишется руками: включили счётчик — абзац сменился сам.
+  site.privacyAnalytics = site.metrikaId
+    ? `<p>\n` +
+      `        На сайте установлен счётчик посещаемости Яндекс.Метрика\n` +
+      `        (номер ${site.metrikaId}). Он показывает нам обезличенную\n` +
+      `        статистику: сколько человек зашло, с каких страниц ушло, с\n` +
+      `        телефона или с компьютера. Имён и телефонов он не знает.\n` +
+      `      </p>\n` +
+      `      <p>\n` +
+      `        Счётчик сохраняет в вашем браузере файлы cookie и передаёт\n` +
+      `        данные о посещении в ООО «Яндекс» — российскую компанию,\n` +
+      `        серверы находятся в России. Что именно собирает Яндекс,\n` +
+      `        написано в его\n` +
+      `        <a class="link" href="https://yandex.ru/legal/confidential/"\n` +
+      `           target="_blank" rel="noopener noreferrer">политике\n` +
+      `        конфиденциальности</a>.\n` +
+      `      </p>\n` +
+      `      <p>\n` +
+      `        <strong>Счётчик не включается сам.</strong> При первом заходе\n` +
+      `        внизу появляется вопрос, и до нажатия «Принять» на серверы\n` +
+      `        Яндекса не уходит ни одного запроса. Ответ «Не нужно»\n` +
+      `        оставляет сайт полностью рабочим — мы просто не увидим\n` +
+      `        ваш визит в статистике. Решение можно поменять в любой\n` +
+      `        момент кнопкой ниже.\n` +
+      `      </p>`
+    : `<p>\n` +
+      `        Счётчиков посещаемости, рекламных пикселей и систем аналитики\n` +
+      `        на сайте <strong>сейчас нет</strong>. Мы не знаем, кто и когда\n` +
+      `        сюда заходил.\n` +
+      `      </p>\n` +
+      `      <p>\n` +
+      `        Если счётчик появится, при первом заходе внизу страницы\n` +
+      `        появится вопрос, и без вашего согласия он не включится.\n` +
+      `        Этот раздел политики обновится вместе с ним.\n` +
+      `      </p>`;
 
   // Пасторов может быть несколько — имена склеиваем по-русски, через «и»
   const pastors = site.pastors ?? [];
@@ -283,6 +327,11 @@ function derive(site) {
     : '';
 
   site.emailJsonLd = site.email ? `"email": "${site.email}",` : '';
+
+  // В политике почта идёт отдельной фразой, а не строкой списка
+  site.emailPolicyHtml = site.email
+    ? `Почта: <a class="link" href="mailto:${site.email}">${site.email}</a>.`
+    : '';
 
   site.emailRowHtml = site.email
     ? `<div>\n` +

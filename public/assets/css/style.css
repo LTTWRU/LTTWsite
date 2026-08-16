@@ -91,6 +91,7 @@
   --font-display: 'Federov2', 'Jost', system-ui, sans-serif;
   --font-text: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
+  --step--2: clamp(0.74rem, 0.72rem + 0.1vw, 0.8rem);
   --step--1: clamp(0.82rem, 0.79rem + 0.14vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.22vw, 1.13rem);
   --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
@@ -194,6 +195,13 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Браузерное правило для hidden — всего лишь [hidden] { display: none },
+   и любой наш класс с собственным display его перебивает: кнопка с
+   атрибутом hidden осталась бы на виду. Закрываем это раз и навсегда. */
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -476,6 +484,12 @@ p {
 }
 .btn--cream:hover {
   box-shadow: 0 12px 30px rgba(60, 20, 0, 0.28), inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Компактный размер — для полоски согласия, где кнопки второстепенны */
+.btn--sm {
+  padding: 0.8em 1.4em;
+  font-size: var(--step--2);
 }
 
 /* Текстовая ссылка с растущей линией */
@@ -1426,6 +1440,11 @@ body.no-scroll .header .brand__lockup--brand {
   color: var(--fg-soft);
 }
 
+/* Отступ живёт на абзацах, а не на блоке-обёртке. Обёртка — это тот
+   самый элемент, который схлопывается в ноль при закрытом ответе: дай
+   ему padding, и он перестанет складываться, а из закрытого пункта
+   полезет первая строка текста. */
+
 /* ── Символ веры ──────────────────────────────────────────────────
    Тот же аккордеон, но заголовком служит первая строка символа: она
    и есть цитата, и она же — кнопка «читать целиком». */
@@ -2129,6 +2148,12 @@ body.no-scroll .header .brand__lockup--brand {
     opacity: 1;
     translate: 0 0;
   }
+  /* Полоска согласия обязана быть видна сразу: анимация здесь отключена,
+     а без этого правила она осталась бы прозрачной навсегда. */
+  .cookie {
+    opacity: 1;
+    transform: none;
+  }
   .ticker__track {
     animation: none;
   }
@@ -2141,7 +2166,91 @@ body.no-scroll .header .brand__lockup--brand {
   }
 }
 
+/* ── Полоска согласия на счётчик ──────────────────────────────────────
+   Появляется внизу и не перекрывает содержимое: свои цвета берёт из
+   тёмного набора, потому что стоит поверх любой секции — и светлой,
+   и тёмной, и брендовой.                                              */
+.cookie {
+  position: fixed;
+  z-index: 400;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  left: clamp(0.75rem, 2vw, 1.5rem);
+  max-width: 46rem;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem clamp(1rem, 3vw, 2rem);
+  padding: clamp(1rem, 2.5vw, 1.4rem) clamp(1.15rem, 3vw, 1.75rem);
+  color: var(--cream);
+  background: color-mix(in srgb, var(--void) 88%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: var(--r-lg);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cream) 16%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sh-3);
+  /* Стартовое состояние: полоска выезжает после решения показать её */
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--spring);
+}
+
+.cookie.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.cookie__text {
+  flex: 1 1 22rem;
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--cream) 80%, transparent);
+}
+
+.cookie__text a {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, var(--cream) 45%, transparent);
+}
+
+.cookie__text a:hover {
+  text-decoration-color: currentColor;
+}
+
+.cookie__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Внутри полоски всегда тёмный фон, поэтому призрачная кнопка
+   осветляется независимо от темы страницы. */
+.cookie .btn--ghost {
+  color: var(--cream);
+  background: color-mix(in srgb, var(--cream) 9%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cream) 22%, transparent);
+}
+
+.cookie .btn--ghost:hover {
+  background: color-mix(in srgb, var(--cream) 15%, transparent);
+}
+
+@media (max-width: 32rem) {
+  .cookie__actions {
+    width: 100%;
+  }
+  .cookie__actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
 @media print {
+  .cookie,
   .header,
   .menu,
   .ticker,

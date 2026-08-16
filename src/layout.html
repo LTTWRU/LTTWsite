@@ -38,7 +38,7 @@
     </script>
 
     <script type="application/json" id="site-data">
-      { "services": {{ site.services }}, "utcOffset": {{ site.utcOffset }}, "phoneRaw": "{{ site.phoneRaw }}" }
+      { "services": {{ site.services }}, "utcOffset": {{ site.utcOffset }}, "phoneRaw": "{{ site.phoneRaw }}", "metrikaId": "{{ site.metrikaId }}" }
     </script>
 
     <script type="application/ld+json">
@@ -77,6 +77,6 @@
 
     {{ partial.footer }}
 
-    {{ site.metrikaHtml }}
+    {{ site.cookieBarHtml }}
   </body>
 </html>

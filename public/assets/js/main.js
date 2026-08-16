@@ -384,6 +384,98 @@
     });
   }
 
+  /* ── Согласие на счётчик посещаемости ───────────────────────────
+     Порядок здесь важнее кода: до нажатия «Принять» на mc.yandex.ru
+     не уходит ни одного запроса. Счётчик подключается только после
+     согласия, а решение помнится вместе с датой — если когда-нибудь
+     спросят, когда человек его дал, ответ будет.                     */
+
+  const CONSENT = 'svetmiru-analytics';
+
+  const readConsent = () => {
+    try {
+      return JSON.parse(localStorage.getItem(CONSENT) || 'null');
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const loadMetrika = (id) => {
+    if (!id || window.ym) return;
+    window.ym = function () {
+      (window.ym.a = window.ym.a || []).push(arguments);
+    };
+    window.ym.l = Date.now();
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://mc.yandex.ru/metrika/tag.js';
+    document.head.appendChild(s);
+    window.ym(id, 'init', {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+    });
+  };
+
+  const bar = $('#cookie-bar');
+  const metrikaId = data.metrikaId;
+
+  const decide = (answer) => {
+    try {
+      localStorage.setItem(
+        CONSENT,
+        JSON.stringify({ ответ: answer, дата: new Date().toISOString() })
+      );
+    } catch (e) {}
+    if (bar) bar.hidden = true;
+    if (answer === 'yes') loadMetrika(metrikaId);
+  };
+
+  if (metrikaId) {
+    const saved = readConsent();
+    if (saved?.ответ === 'yes') loadMetrika(metrikaId);
+    else if (!saved && bar) {
+      bar.hidden = false;
+      requestAnimationFrame(() => bar.classList.add('is-shown'));
+    }
+  }
+
+  if (bar) {
+    bar.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cookie]');
+      if (btn) decide(btn.dataset.cookie);
+    });
+  }
+
+  // Кнопка на странице политики: отозвать согласие или дать его заново.
+  const reset = $('#cookie-reset');
+  if (reset) {
+    const status = $('#cookie-status');
+    const show = () => {
+      const saved = readConsent();
+      if (!status) return;
+      status.textContent = !metrikaId
+        ? 'Счётчик на сайте сейчас не подключён — считать нечего.'
+        : saved?.ответ === 'yes'
+          ? 'Сейчас вы разрешили подсчёт посещаемости.'
+          : saved?.ответ === 'no'
+            ? 'Сейчас подсчёт посещаемости выключен.'
+            : 'Вы ещё не отвечали на вопрос о подсчёте посещаемости.';
+      reset.hidden = !saved;
+    };
+    show();
+    reset.addEventListener('click', () => {
+      try {
+        localStorage.removeItem(CONSENT);
+      } catch (e) {}
+      show();
+      if (bar) {
+        bar.hidden = false;
+        requestAnimationFrame(() => bar.classList.add('is-shown'));
+      }
+    });
+  }
+
   /* ── Год в подвале ─────────────────────────────────────────────── */
 
   const year = $('#year');

@@ -1,0 +1,279 @@
+<!--{
+  "title": "Обработка персональных данных",
+  "description": "Что сайт церкви «Свет миру» знает о посетителях, что сохраняет в браузере, кому передаёт и как попросить удалить данные о себе.",
+  "changefreq": "yearly",
+  "priority": 0.2
+}-->
+
+<section class="page-head">
+  <div class="wrap wrap--wide page-head__inner">
+    <p class="crumbs">
+      <a href="/">Главная</a> <span aria-hidden="true">/</span> Обработка данных
+    </p>
+    <h1 class="page-head__title">Что мы знаем<br />о посетителях</h1>
+    <p class="page-head__lede">
+      Документ обязательный, но написан человеческим языком. Если после него
+      останутся вопросы — позвоните, ответим.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">Если коротко</p></div>
+      <div>
+        <h2 class="lede">Сайт не собирает о вас ничего и никуда не отправляет</h2>
+      </div>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card reveal" style="--i: 0">
+        <p class="card__index">01</p>
+        <h3 class="card__title">Форма ничего не отправляет</h3>
+        <p class="card__text">
+          У сайта нет базы данных. Форма на странице «Контакты» собирает текст
+          и открывает мессенджер — дальше решаете вы.
+        </p>
+      </article>
+      <article class="card reveal" style="--i: 1">
+        <p class="card__index">02</p>
+        <h3 class="card__title">Регистрации нет</h3>
+        <p class="card__text">
+          Ни аккаунтов, ни паролей, ни входа через соцсети. Нам нечего о вас
+          хранить, потому что мы ничего не заводим.
+        </p>
+      </article>
+      <article class="card reveal" style="--i: 2">
+        <p class="card__index">03</p>
+        <h3 class="card__title">Чужих скриптов нет</h3>
+        <p class="card__text">
+          Шрифты и картинки лежат на нашем сервере. Страница открывается, не
+          обращаясь ни к одному постороннему сайту.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section on-dark">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal"><p class="eyebrow">Кто отвечает</p></div>
+      <div class="reveal"><h2 class="lede">Оператор персональных данных</h2></div>
+    </div>
+
+    <div class="prose reveal" style="max-width: 60ch">
+      <p>
+        {{ site.legal.entity }}. Руководитель — {{ site.legal.leader }}.
+        Уведомление о начале деятельности принято {{ site.legal.regDate }},
+        ведомственный номер {{ site.legal.regNumber }},
+        {{ site.legal.regAuthority }}.
+      </p>
+      <p>
+        Адрес: {{ site.address.full }}. Телефон:
+        <a class="link" href="tel:{{ site.phoneRaw }}">{{ site.phone }}</a>.
+        {{ site.emailPolicyHtml }}
+      </p>
+      <p>
+        По любому вопросу об этой странице и о данных звоните по телефону
+        выше или подходите в приёмной: {{ site.office }}.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">Подробно</p></div>
+      <div><h2 class="lede">Откуда у нас вообще берутся данные</h2></div>
+    </div>
+
+    <div class="faq reveal">
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Форма «Расскажите о себе» на странице «Контакты»
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            <p>
+              Эта форма устроена не так, как обычные формы на сайтах. Она
+              ничего не отправляет на сервер: когда вы нажимаете кнопку,
+              браузер складывает введённое в текст сообщения и открывает
+              WhatsApp. Всё написанное остаётся на вашем устройстве, пока вы
+              сами не нажмёте «Отправить» уже в мессенджере.
+            </p>
+            <p>
+              Пока вы этого не сделали, мы не видим ни имени, ни телефона, ни
+              текста. У сайта нет базы, куда это можно было бы записать.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Когда вы написали в мессенджер или позвонили
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            <p>
+              Тогда мы видим то, что вы сами сообщили: имя, номер, суть
+              вопроса. Используем это только чтобы ответить вам и помочь с
+              тем, о чём вы написали.
+            </p>
+            <p>
+              <strong>Мы не добавляем эти номера в рассылки</strong> и не
+              используем их для приглашений на мероприятия, если вы об этом не
+              просили. Переписку храним, пока она нужна для общения с вами;
+              попросите удалить — удалим.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Счётчик посещаемости и файлы cookie
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            {{ site.privacyAnalytics }}
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Что сайт сохраняет в вашем браузере
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            <p>
+              Две записи, обе — в памяти вашего же браузера, к нам они не
+              попадают:
+            </p>
+            <p>
+              <strong>Выбранная тема</strong> — светлая или тёмная. Появляется
+              только если вы нажали переключатель в шапке. Нужна, чтобы при
+              следующем заходе сайт открылся так, как вы привыкли.
+            </p>
+            <p>
+              <strong>Ответ про счётчик</strong> — чтобы не спрашивать одно и
+              то же при каждом визите. Хранится вместе с датой ответа.
+            </p>
+            <p>
+              Обе записи стираются, если очистить данные сайта в настройках
+              браузера.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Карта на страницах «Главная» и «Контакты»
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            <p>
+              Карта не загружается сама — вместо неё стоит кнопка «Показать
+              карту». Пока вы её не нажали, к Яндексу не уходит ничего.
+            </p>
+            <p>
+              После нажатия карта открывается рамкой с сервиса Яндекс.Карты, и
+              Яндекс, как любой сайт, видит ваш IP-адрес и тип браузера. Это
+              российская компания, данные за границу не уходят.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          Фотографии с богослужений
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a">
+          <div>
+            <p>
+              На сайте есть снимки, сделанные во время встреч, и на них видны
+              лица. Фотография человека — это тоже персональные данные.
+            </p>
+            <p>
+              <strong>Если вы узнали себя и не хотите быть на сайте —
+              скажите, и мы уберём снимок.</strong> Объяснять причину не
+              нужно, достаточно позвонить или подойти в приёмную. Заменим
+              фотографию в тот же день.
+            </p>
+            <p>
+              О съёмке предупреждаем перед началом встречи. Если вы не хотите
+              попадать в кадр, скажите об этом на входе — подскажем, где сесть.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-brand">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="reveal"><p class="eyebrow">Ваши права</p></div>
+      <div class="reveal">
+        <h2 class="lede">Что вы можете потребовать и как это сделать</h2>
+      </div>
+    </div>
+
+    <div class="prose reveal" style="max-width: 62ch">
+      <p>
+        По закону вы вправе узнать, какие данные о вас у нас есть, попросить
+        их исправить, потребовать удалить и отозвать согласие на обработку.
+      </p>
+      <p>
+        Никакой формы для этого не нужно.
+        <strong
+          >Позвоните по телефону {{ site.phone }} или подойдите в приёмную
+          ({{ site.office }})</strong
+        >
+        и скажите, что хотите. Ответим в течение тридцати дней, но обычно
+        решаем всё в тот же день.
+      </p>
+      <p>
+        Если наш ответ вас не устроит, вы можете обратиться в
+        Роскомнадзор — это ведомство отвечает за защиту прав субъектов
+        персональных данных.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><p class="eyebrow">Ваш выбор</p></div>
+      <div><h2 class="lede">Подсчёт посещаемости</h2></div>
+    </div>
+
+    <div class="prose reveal" style="max-width: 60ch">
+      <p id="cookie-status">Проверяем настройку…</p>
+      <p>
+        <button class="btn btn--ghost" type="button" id="cookie-reset" hidden>
+          Изменить решение
+        </button>
+      </p>
+      <p style="color: var(--fg-faint); font-size: var(--step--1)">
+        Политика может меняться — например, если на сайте появится новый
+        сервис. Актуальная редакция всегда лежит по этому адресу.
+        Последнее изменение: {{ site.privacyUpdated }}.
+      </p>
+    </div>
+  </div>
+</section>
