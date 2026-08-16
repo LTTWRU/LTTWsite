@@ -60,6 +60,24 @@ AddDefaultCharset UTF-8
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Чужие сайты не смогут показать наш внутри своей рамки и выдать за свой.
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Камера, микрофон и геолокация сайту не нужны — закрываем заранее.
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+  # Браузер запоминает на год, что сюда ходят только по https, и больше
+  # не пробует незашифрованное соединение даже по прямой ссылке.
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Откуда странице разрешено брать содержимое. Всё своё, кроме двух
+  # исключений: карта приходит рамкой с Яндекса после нажатия кнопки,
+  # а mc.yandex.ru прописан заранее — чтобы счётчик Метрики заработал
+  # сразу, как только номер впишут в site.config.json, и не пришлось
+  # править этот файл. 'unsafe-inline' нужен для стилей прямо в вёрстке
+  # и для скрипта темы, который срабатывает до первой отрисовки.
+  Header set Content-Security-Policy "default-src 'self'; img-src 'self' data: https://mc.yandex.ru; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru; frame-src https://yandex.ru https://*.yandex.ru https://mc.yandex.ru; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
 </IfModule>
 
 # Список файлов в папке без index.html показывать не нужно

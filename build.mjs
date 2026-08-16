@@ -338,7 +338,23 @@ async function build() {
   await mkdir(p('dist'), { recursive: true });
   if (existsSync(p('public'))) await cp(p('public'), p('dist'), { recursive: true });
 
-  const stamps = await fingerprint(p('public/assets'), 'assets');
+  // Federov2 — шрифт из брендбука, самого файла у нас пока нет. Правило
+  // @font-face без файла даёт 404 на каждой загрузке страницы: заголовки
+  // всё равно уходят на запасной Jost, но запрос уходит и висит в логах.
+  // Кладут файл в public/assets/fonts/ — правило возвращается само.
+  const displayFont = 'assets/fonts/Federov2-Regular.woff2';
+  if (!existsSync(p('public', displayFont))) {
+    const cssPath = p('dist/assets/css/style.css');
+    const css = await readFile(cssPath, 'utf8');
+    await writeFile(
+      cssPath,
+      css.replace(/@font-face \{[^}]*Federov2-Regular\.woff2[^}]*\}\n*/s, '')
+    );
+  }
+
+  // Отпечатки считаем по dist, а не по public: правило выше уже могло
+  // изменить стили, и хэш должен отвечать тому, что реально уедет на сервер.
+  const stamps = await fingerprint(p('dist/assets'), 'assets');
 
   const pageFiles = (await readdir(p('src/pages'))).filter((f) => f.endsWith('.html'));
   const built = [];

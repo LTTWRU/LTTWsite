@@ -885,7 +885,12 @@ body.no-scroll .header .brand__lockup--brand {
   );
 }
 
+/* Шрифт задан здесь, а не унаследован от h1: нижний слой заголовка —
+   декоративный div, и без этих строк два слоя набрались бы разными
+   гарнитурами. */
 .hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: min(var(--step-5), 11.5vh);
   line-height: 0.9;
   letter-spacing: -0.04em;
