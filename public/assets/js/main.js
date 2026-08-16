@@ -417,9 +417,16 @@
     s.src = 'https://mc.yandex.ru/metrika/tag.js?id=' + id;
     document.head.appendChild(s);
     window.ym(id, 'init', {
+      // Страницы собраны заранее и отдаются готовыми, без дорисовки
+      // в браузере — счётчику об этом лучше сказать.
+      ssr: true,
       clickmap: true,
       trackLinks: true,
       accurateTrackBounce: true,
+      // Адрес и источник передаём явно: счётчик стартует не вместе со
+      // страницей, а в момент согласия, и брать их «как сейчас» надёжнее.
+      referrer: document.referrer,
+      url: location.href,
       // Вебвизор пишет и то, что человек набирает в форме. Включается
       // только осознанно, через metrikaWebvisor в site.config.json.
       webvisor: data.webvisor === true,
